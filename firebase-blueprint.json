@@ -1,0 +1,94 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile document stored under users collection",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string", "maxLength": 128 },
+        "email": { "type": "string", "maxLength": 256 },
+        "displayName": { "type": "string", "maxLength": 128 },
+        "role": { "type": "string", "enum": ["user", "admin"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Memorial": {
+      "title": "Memorial",
+      "description": "Memorial page commemorating a deceased person",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "deceasedName": { "type": "string", "minLength": 2, "maxLength": 120 },
+        "titlePrefix": { "type": "string", "maxLength": 60 },
+        "photoUrl": { "type": "string", "maxLength": 500000 },
+        "dateOfDeath": { "type": "string", "maxLength": 30 },
+        "hijriDate": { "type": "string", "maxLength": 50 },
+        "summary": { "type": "string", "maxLength": 2000 },
+        "customDuaa": { "type": "string", "maxLength": 1500 },
+        "charityProjects": { "type": "array" },
+        "galleryImages": { "type": "array" },
+        "visitCount": { "type": "number" },
+        "prayerCount": { "type": "number" },
+        "isPublished": { "type": "boolean" },
+        "isSuspended": { "type": "boolean" },
+        "allowPublicDuaa": { "type": "boolean" },
+        "domainType": { "type": "string", "enum": ["subdomain", "custom"] },
+        "subdomainSlug": { "type": "string", "maxLength": 100 },
+        "customDomain": { "type": "string", "maxLength": 150 },
+        "createdAt": { "type": "string" },
+        "updatedAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "deceasedName"]
+    },
+    "Prayer": {
+      "title": "Prayer",
+      "description": "Duaa / prayer written by visitors for the deceased",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "memorialId": { "type": "string", "maxLength": 128 },
+        "authorName": { "type": "string", "maxLength": 100 },
+        "duaaText": { "type": "string", "minLength": 2, "maxLength": 1000 },
+        "isHidden": { "type": "boolean" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "memorialId", "duaaText"]
+    },
+    "Report": {
+      "title": "Report",
+      "description": "User report for inappropriate memorial page content",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "memorialId": { "type": "string", "maxLength": 128 },
+        "memorialName": { "type": "string", "maxLength": 120 },
+        "reporterName": { "type": "string", "maxLength": 100 },
+        "reason": { "type": "string", "maxLength": 200 },
+        "details": { "type": "string", "maxLength": 1000 },
+        "status": { "type": "string", "enum": ["pending", "resolved", "dismissed"] },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "memorialId", "reason", "status"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user account information"
+    },
+    "/memorials/{memorialId}": {
+      "schema": "Memorial",
+      "description": "Stores memorial pages"
+    },
+    "/memorials/{memorialId}/prayers/{prayerId}": {
+      "schema": "Prayer",
+      "description": "Stores prayers for a specific memorial page"
+    },
+    "/reports/{reportId}": {
+      "schema": "Report",
+      "description": "Stores reported pages for admin review"
+    }
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "أثر طيب - صدقة جارية وصفحات تذكارية",
+  "description": "منصة إسلامية لإنشاء صفحات تذكارية وصدقات جارية عن المتوفين، تجمع الدعاء وقراءة القرآن والأذكار وأعمال الخير ومشاركتها مع الأهل والأصدقاء.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
